@@ -1,0 +1,361 @@
+<style>
+
+body {
+  min-height: 100vh;
+  padding-top: 100px;
+  background: ##5CB879;
+  font-weight: 500;
+
+}
+
+.title-section {
+  background: #246787;
+  padding: 2px 
+
+10px;
+  color: white;
+
+}
+.inner-section {
+  padding: 20px;
+}
+.wrapper {
+  overflow: hidden;
+  margin: auto;
+  width: 90%;
+  max-width: 380px;
+  background: white;
+  
+
+border-radius: 5px;
+  box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-flow: column wrap;
+}
+.wrapper .password-section {
+  position: relative;
+  
+
+border: 2px solid lightgray;
+  color: gray;
+  margin-top: 20px;
+  padding: 2px 2px 2px 8px;
+  border-radius: 5px;
+  text-align: left;
+  display: flex;
+  justify-content: 
+
+space-between;
+}
+.wrapper .password-section .alert {
+  position: absolute;
+  padding: 0 5px;
+  border-radius: 2px;
+  width: 21ch;
+  height: 89%;
+  left: 2px;
+  top: -
+
+100%;
+  width: 96%;
+  text-align: center;
+  color: #333;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.wrapper .password-section .alert.success {
+  background: rgb
+
+(29,161,242, 0.9);
+  opacity: 1;
+}
+.wrapper .password-section .alert.fail {
+  background: rgb(230,0,35, 0.9);
+  color: white;
+  opacity: 1;
+}
+.wrapper .password-section 
+
+.copy {
+  height: 100%;
+  width: 50px;
+  background: #5CB879;
+  border: 0;
+  color: white;
+  border-radius: 2px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.3s 
+
+ease;
+}
+.wrapper .password-section .copy:hover {
+  background: #525AFC;
+}
+.wrapper .controls {
+  text-align: left;
+  display: flex;
+  flex-flow: column wrap;
+}
+.wrapper .controls .control {
+  padding: 3px;
+  border-bottom: 1px solid lightgray;
+  width: 100%;
+  margin: 2px;
+}
+.wrapper .controls .generate {
+  width: 100%;
+  
+
+border: 0;
+  color: white;
+  background: #5CB879;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+.wrapper .controls 
+
+.generate:hover {
+  background: #52C6FC;
+}
+#length-box {
+  width: 100%;
+visibility: hidden;
+}
+#length-box input {
+  width: 100%;
+visibility: hidden;
+
+}
+input
+
+[type="checkbox"] {
+  visibility: hidden;
+}
+label.check-label {
+  position: relative;
+}
+label.check-label:before {
+  content: "";
+  height: 1rem;
+  width: 1rem;
+  left: -24px;
+  
+
+top: 0;
+  border: 0.5px solid lightgray;
+  position: absolute;
+  background: transparent;
+  transition: all 0.3s cubic-bezier(0, 0.82, 1, 1.81);
+}
+input
+
+[type="checkbox"]:checked + label.check-label:before {
+  content: "*";
+  font-family: "FontAwesome";
+  font-size: 0.8rem;
+  color: #212121;
+  text-align: center;
+  
+
+background: #00e676;
+  transition: all 0.3s cubic-bezier(0, 0.82, 1, 1.81);
+}
+
+</style>
+
+
+<html lang="en" >
+<body>
+ 
+  <div class="wrapper">
+  <div class="title-
+
+section">
+    <h1 class="title"><img src="https://www.linz.govt.nz/sites/all/themes/linz_osi/images/logo/logo-linz.png"><br><font color="#38BA8D">Password 
+
+Generator</font></br></h1>
+  </div>
+  <div class="inner-section">
+    <div class="password-section">
+    <div class="pass-field" id="pass-field">
+    ----
+  </div>
+    
+
+<button id="copy" class="copy">Copy</button>
+    <div class="alert" id="alert"><span class="message" id="message"></div>
+  </div>
+  <p class="info">Select 
+
+your options and click the "Generate" button; your password will appear above.</p>
+  <div class="controls">
+    <div class="control length" id="length-box" >
+     
+
+ <label for="length">Password Length</label>
+      <input type="range" id='length' min="9" max="11" list="ranges">
+      <datalist id="ranges">
+        <option 
+
+value="9" label="9">
+        <option value="10">
+        <option value="11" label="11">
+  
+      </datalist>
+    </div>
+    <div class="control">
+      <input 
+
+type="checkbox" id="lowercase">
+      <label class="check-label" for="lowercase"><span class="checkbox">Use Lowercase Characters</span></label>
+    
+
+</div>
+    <div class="control">
+      <input type="checkbox" id="uppercase">
+      <label class="check-label" for="uppercase"><span class="checkbox">Use 
+
+Uppercase Characters</span></label>
+    </div>
+    <div class="control">
+      <input type="checkbox" id="numbers">
+      <label class="check-label" 
+
+for="numbers"><span class="checkbox">Use Numbers</span></label>
+    </div>
+<div class="control">
+      <input type="checkbox" id="punctuation">
+      <label 
+
+class="check-label" for="punctuation"><span class="checkbox">Use special characters</span></label>
+    
+    </div>
+    
+    <button class="generate" 
+
+id="generate">Generate!</button>
+  </div>
+  </div>
+</div>
+ 
+<script src='https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js'></script>
+
+ 
+</body>
+</html>
+
+
+<script>
+
+var clipboard = new Clipboard('.copy')
+var lowercase = "abcdefghijklmnprstuvwxyz",
+  uppercase = "ABCDEFGHIJKLMNPRSTUVWXYZ",
+  numbers = 
+
+"01234567890123459678901234567890123456789123456789",
+  punctuation = "!@#$%^&*()_+~`|}{[]:;?><,./-=",
+  lowercaseInput = 
+
+document.getElementById("lowercase"),
+  uppercaseInput = document.getElementById("uppercase"),
+  punctuationInput = document.getElementById
+
+("punctuation"),
+  numbersInput = document.getElementById("numbers"),
+  lengthInput = document.getElementById("length"),
+  passwordFeild = 
+
+document.getElementById("pass-field"),
+  generateButton = document.getElementById("generate"),
+  copyButton = document.getElementById("copy"),
+  plength,
+ 
+
+ userPassword,
+  passwordCharSet;
+ 
+function generate() {
+  userPassword = "";
+  passwordCharSet = "";
+  if (lowercaseInput.checked) {
+    passwordCharSet += 
+
+lowercase;
+  }
+  if (uppercaseInput.checked) {
+    passwordCharSet += uppercase;
+  }
+  if (punctuationInput.checked) {
+    passwordCharSet += punctuation;
+  }
+  if 
+
+(numbersInput.checked) {
+    passwordCharSet += numbers;
+  }
+  plength = Number(lengthInput.value);
+ 
+  for (let i = 0; i < plength; i++) {
+    userPassword += 
+
+passwordCharSet.charAt(
+      Math.floor(Math.random() * passwordCharSet.length)
+    );
+  }
+  if (userPassword == "") {
+    let alertbox = 
+
+document.getElementById('alert');
+    alertbox.innerHTML = "Please select an option before generating"
+    alertbox.classList.add('fail');
+    setTimeout(function(){
+   
+
+   alertbox.classList.remove('fail');
+    }, 3000);
+  } else {
+    passwordFeild.innerHTML = userPassword;
+  }
+  copyButton.setAttribute("data-clipboard-text", 
+
+userPassword)
+}
+generateButton.addEventListener("click", generate);
+ 
+clipboard.on('success', function(e) {
+    console.info('Action:', e.action);
+    console.info
+
+('Text:', e.text);
+    console.info('Trigger:', e.trigger);
+    let alertbox = document.getElementById('alert');
+    alertbox.innerHTML = "Copied!"
+    
+
+alertbox.classList.add('success');
+    setTimeout(function(){
+      alertbox.classList.remove('success');
+    }, 3000);
+    
+    e.clearSelection();
+});
+ 
+clipboard.on('error', 
+
+function(e) {
+    console.error('Action:', e.action);
+    console.error('Trigger:', e.trigger);
+  let alertbox = document.getElementById('alert');
+    alertbox.innerHTML = 
+
+"Try select the text to copy"
+    alertbox.classList.add('fail');
+    setTimeout(function(){
+      alertbox.classList.remove('fail');
+    }, 3000);
+});
+
+</script>
